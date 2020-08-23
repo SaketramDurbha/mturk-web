@@ -4,7 +4,7 @@
     <!-- ID Column -->
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef> ID  </mat-header-cell>
-      <mat-cell *matCellDef="let profile"> {{profile.id}} </mat-cell>
+      <mat-cell *matCellDef="let profile"> <a routerLink="/profiles/{{profile.id}}"> {{profile.id}} </a></mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

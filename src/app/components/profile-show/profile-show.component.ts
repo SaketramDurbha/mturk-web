@@ -15,23 +15,15 @@ import {MatTableDataSource} from '@angular/material/table';
   selector: 'app-profile-show',
   templateUrl: './profile-show.component.html',
   styleUrls: ['./profile-show.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
 })
 export class ProfileShowComponent implements OnInit {
   observations: Observation[];
-  expandedObservation: Observation | null;
   displayedObservationColumns: string[] = ['id', 'first_name', 'last_name', 'affiliation', 'city', 'country', 'email'];
 
   gscholarURLs: MatTableDataSource<URL> = new MatTableDataSource<URL>();
-
-  displayedURLColumns: string[] = ['id', 'url'];
   newGScholarURL: string;
+
+  displayedSearchURLColumns: string[] = ['google_search', 'gscholar_search'];
 
   constructor(
     private route: ActivatedRoute,
@@ -73,7 +65,15 @@ export class ProfileShowComponent implements OnInit {
   }
 
   googleLink(observation: Observation): string {
-    return `https://google.com/search?q=${observation.first_name} ${observation.last_name} ${observation.affiliation}`;
+    const q = [observation.first_name, observation.last_name, observation.affiliation].join(' ');
+
+    return `https://google.com/search?q=${q}`;
+  }
+
+  gscholarLink(observation: Observation): string {
+    const q = [observation.first_name, observation.last_name].join(' ');
+
+    return `https://scholar.google.com/citations?view_op=search_authors&hl=en&mauthors=${q}`;
   }
 
 }

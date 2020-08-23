@@ -7,19 +7,22 @@
       <mat-cell *matCellDef="let observation"> {{observation[column]}} </mat-cell>
     </ng-container>
 
-    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-    <ng-container matColumnDef="expandedDetail">
+    <ng-container matColumnDef="google_search">
       <mat-cell *matCellDef="let observation" [attr.colspan]="displayedObservationColumns.length">
         <a [href]="googleLink(observation)" target="_blank"> {{googleLink(observation)}}</a>
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="gscholar_search">
+      <mat-cell *matCellDef="let observation" [attr.colspan]="displayedObservationColumns.length">
+        <a [href]="gscholarLink(observation)" target="_blank"> {{gscholarLink(observation)}}</a>
+      </mat-cell>
+    </ng-container>
+
     <mat-header-row *matHeaderRowDef="displayedObservationColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedObservationColumns;"></mat-row>
-    <mat-row *matRowDef="let row; columns: ['expandedDetail']"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedSearchURLColumns"></mat-row>
   </mat-table>
-
-
 
   <h2>Google Scholar URLs</h2>
 

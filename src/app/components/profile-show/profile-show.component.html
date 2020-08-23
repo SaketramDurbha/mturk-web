@@ -1,76 +1,45 @@
 <div id="content">
   <h2>Observations</h2>
 
-  <mat-table [dataSource]="observations" class="mat-elevation-z8">
-    <!-- ID Column -->
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
-      <mat-cell *matCellDef="let observation"> {{observation.id}} </mat-cell>
+  <mat-table [dataSource]="observations" class="mat-elevation-z8" multiTemplateDataRows>
+    <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedObservationColumns">
+      <mat-header-cell *matHeaderCellDef> {{column}} </mat-header-cell>
+      <mat-cell *matCellDef="let observation"> {{observation[column]}} </mat-cell>
     </ng-container>
 
-    <!-- First Name Column -->
-    <ng-container matColumnDef="first_name">
-      <mat-header-cell *matHeaderCellDef> First Name </mat-header-cell>
-      <mat-cell *matCellDef="let observation"> {{observation.first_name}} </mat-cell>
-    </ng-container>
-
-    <!-- Last Name Column -->
-    <ng-container matColumnDef="last_name">
-      <mat-header-cell *matHeaderCellDef> Last Name </mat-header-cell>
-      <mat-cell *matCellDef="let observation"> {{observation.last_name}} </mat-cell>
-    </ng-container>
-
-    <!-- Affiliation Column -->
-    <ng-container matColumnDef="affiliation">
-      <mat-header-cell *matHeaderCellDef> Affiliation </mat-header-cell>
-      <mat-cell *matCellDef="let observation"> {{observation.affiliation}} </mat-cell>
-    </ng-container>
-
-    <!-- City Column -->
-    <ng-container matColumnDef="city">
-      <mat-header-cell *matHeaderCellDef> City </mat-header-cell>
-      <mat-cell *matCellDef="let observation"> {{observation.city}} </mat-cell>
-    </ng-container>
-
-    <!-- Country Column -->
-    <ng-container matColumnDef="country">
-      <mat-header-cell *matHeaderCellDef> Country </mat-header-cell>
-      <mat-cell *matCellDef="let observation"> {{observation.country}} </mat-cell>
-    </ng-container>
-
-    <!-- Email Column -->
-    <ng-container matColumnDef="email">
-      <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
-      <mat-cell *matCellDef="let observation"> {{observation.email}} </mat-cell>
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+      <mat-cell *matCellDef="let observation" [attr.colspan]="displayedObservationColumns.length">
+        <a [href]="googleLink(observation)" target="_blank"> {{googleLink(observation)}}</a>
+      </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedObservationColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedObservationColumns;"></mat-row>
+    <mat-row *matRowDef="let row; columns: ['expandedDetail']"></mat-row>
   </mat-table>
+
+
 
   <h2>Google Scholar URLs</h2>
 
   <mat-table [dataSource]="gscholarURLs" class="mat-elevation-z8">
-    <!-- ID Column -->
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
-      <mat-cell *matCellDef="let url"> {{url.id}} </mat-cell>
-    </ng-container>
-
-    <!-- URL Column -->
-    <ng-container matColumnDef="url">
-      <mat-header-cell *matHeaderCellDef> URL </mat-header-cell>
-      <mat-cell *matCellDef="let url"> {{url.url}} </mat-cell>
-    </ng-container>
-
-    <!-- Valid Column -->
-    <ng-container matColumnDef="valid">
-      <mat-header-cell *matHeaderCellDef> Valid </mat-header-cell>
-      <mat-cell *matCellDef="let url"> {{url.valid}} </mat-cell>
+    <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedURLColumns">
+      <mat-header-cell *matHeaderCellDef> {{column}} </mat-header-cell>
+      <mat-cell *matCellDef="let observation"> {{observation[column]}} </mat-cell>
     </ng-container>
 
 
     <mat-header-row *matHeaderRowDef="displayedURLColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedURLColumns;"></mat-row>
   </mat-table>
+
+  <div style="margin-top: 10px">
+    <mat-form-field class="example-form-field">
+      <mat-label>New GScholar URL</mat-label>
+      <input matInput type="text" [(ngModel)]="newGScholarURL">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="addGScholarURL()">Submit</button>
+  </div>
 </div>

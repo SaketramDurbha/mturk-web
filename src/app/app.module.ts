@@ -7,11 +7,13 @@ import { AppComponent } from './components/app.component';
 import { ProfilesComponent } from './components/profiles/profiles.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
+import { ProfileShowComponent } from './components/profile-show/profile-show.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProfilesComponent
+    ProfilesComponent,
+    ProfileShowComponent
   ],
   imports: [
     BrowserModule,

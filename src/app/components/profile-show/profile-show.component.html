@@ -1,7 +1,6 @@
 <div id="content">
-  <h2>Observations</h2>
+    <h2>Observations</h2>
 
-  <div id="yield">
     <mat-table [dataSource]="observations" class="mat-elevation-z8">
       <!-- ID Column -->
       <ng-container matColumnDef="id">
@@ -48,5 +47,7 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
-  </div>
+
+    <h2>Google Scholar URLS</h2>
+
 </div>

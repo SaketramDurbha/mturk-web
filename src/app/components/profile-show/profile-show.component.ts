@@ -30,7 +30,7 @@ export class ProfileShowComponent implements OnInit {
 
   gscholarURLs: MatTableDataSource<URL> = new MatTableDataSource<URL>();
 
-  displayedURLColumns: string[] = ['id', 'url', 'valid'];
+  displayedURLColumns: string[] = ['id', 'url'];
   newGScholarURL: string;
 
   constructor(
@@ -64,6 +64,12 @@ export class ProfileShowComponent implements OnInit {
       this.gscholarURLs.data.push(url);
       this.gscholarURLs.data = this.gscholarURLs.data;
     });
+  }
+
+  updateValid(urlId: string, valid: boolean): void {
+    const id = this.route.snapshot.paramMap.get('id');
+
+    this.urlService.updateValid(id, urlId, 'gscholar', valid).subscribe(obj => console.log(obj));
   }
 
   googleLink(observation: Observation): string {

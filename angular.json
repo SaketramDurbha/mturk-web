@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "mturk-web"
+    }
+  },
+  "defaultProject": "mturk-web",
+  "cli": {
+    "analytics": "62d9befa-eb17-4205-b80c-54134ec8d84b"
+  }
 }

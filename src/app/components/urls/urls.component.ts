@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
-import {URL} from '../../models/url';
-import {UrlService} from '../../services/url/url.service';
+
+import { MatTableDataSource } from '@angular/material/table';
+
+import { URL } from '../../models/url';
+import { UrlService } from '../../services/url/url.service';
 
 @Component({
   selector: 'app-urls',
@@ -15,9 +17,7 @@ export class UrlsComponent implements OnInit {
   urls: MatTableDataSource<URL> = new MatTableDataSource<URL>();
   newURL: string;
 
-  constructor(private urlService: UrlService) {
-
-  }
+  constructor(private urlService: UrlService) { }
 
   ngOnInit(): void {
     this.getURLs();

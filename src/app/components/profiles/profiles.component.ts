@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import {ProfileService} from '../../services/profile/profile.service';
 import {Profile} from '../../models/profile';
 
@@ -8,7 +9,6 @@ import {Profile} from '../../models/profile';
   styleUrls: ['./profiles.component.scss']
 })
 export class ProfilesComponent implements OnInit {
-
   profiles: Profile[];
   displayedColumns: string[] = ['id'];
 

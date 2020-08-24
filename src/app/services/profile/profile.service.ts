@@ -1,15 +1,16 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
 import { Injectable } from '@angular/core';
-import {Profile} from '../../models/profile';
-import {Observable} from 'rxjs';
-import {environment} from '../../../environments/environment';
+
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+import { environment } from '../../../environments/environment';
+
+import { Profile } from '../../models/profile';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
-
   private profilesUrl = environment.apiUrl + '/profiles';
 
   constructor(private http: HttpClient) { }

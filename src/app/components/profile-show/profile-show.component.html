@@ -19,39 +19,17 @@
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="linkedin_search">
+      <mat-cell *matCellDef="let observation" [attr.colspan]="displayedObservationColumns.length">
+        <a [href]="linkedinLink(observation)" target="_blank"> {{linkedinLink(observation)}}</a>
+      </mat-cell>
+    </ng-container>
+
     <mat-header-row *matHeaderRowDef="displayedObservationColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedObservationColumns;"></mat-row>
     <mat-row *matRowDef="let row; columns: displayedSearchURLColumns"></mat-row>
   </mat-table>
 
-  <h2>Google Scholar URLs</h2>
-
-  <mat-table [dataSource]="gscholarURLs" class="mat-elevation-z8">
-    <ng-container matColumnDef="{{column}}" *ngFor="let column of ['id', 'url']">
-      <mat-header-cell *matHeaderCellDef> {{column}} </mat-header-cell>
-      <mat-cell *matCellDef="let observation"> {{observation[column]}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="valid">
-      <mat-header-cell *matHeaderCellDef> Valid </mat-header-cell>
-      <mat-cell *matCellDef="let url">
-        <mat-checkbox [(ngModel)]="url.valid"
-                      (change)="updateValid(url.id, url.valid)">
-        </mat-checkbox>
-      </mat-cell>
-    </ng-container>
-
-
-    <mat-header-row *matHeaderRowDef="['id', 'url', 'valid']"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: ['id', 'url', 'valid'];"></mat-row>
-  </mat-table>
-
-  <div style="margin-top: 10px">
-    <mat-form-field class="example-form-field">
-      <mat-label>New GScholar URL</mat-label>
-      <input matInput type="url" [(ngModel)]="newGScholarURL">
-    </mat-form-field>
-
-    <button mat-raised-button color="primary" (click)="addGScholarURL()">Submit</button>
-  </div>
+  <app-urls [profileId]="id" type="GScholar"></app-urls>
+  <app-urls [profileId]="id" type="LinkedIn"></app-urls>
 </div>

@@ -16,12 +16,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { UrlsComponent } from './components/urls/urls.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProfilesComponent,
-    ProfileShowComponent
+    ProfileShowComponent,
+    UrlsComponent
   ],
   imports: [
     BrowserModule,

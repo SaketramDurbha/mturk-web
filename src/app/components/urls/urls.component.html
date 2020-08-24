@@ -6,18 +6,26 @@
     <mat-cell *matCellDef="let url"> {{url[column]}} </mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="votes">
+    <mat-header-cell *matHeaderCellDef> Votes </mat-header-cell>
+    <mat-cell *matCellDef="let url">
+      <button mat-icon-button (click)="downvote(url)"><mat-icon>arrow_downward</mat-icon></button>
+      {{url.up_votes - url.down_votes}}
+      <button mat-icon-button (click)="upvote(url)"><mat-icon>arrow_upward</mat-icon></button>
+    </mat-cell>
+  </ng-container>
+
   <ng-container matColumnDef="valid">
     <mat-header-cell *matHeaderCellDef> Valid </mat-header-cell>
     <mat-cell *matCellDef="let url">
       <mat-checkbox [(ngModel)]="url.valid"
-                    (change)="updateValid(url.id, url.valid)">
+                    (change)="updateValid(url)">
       </mat-checkbox>
     </mat-cell>
   </ng-container>
 
-
-  <mat-header-row *matHeaderRowDef="['id', 'url', 'valid']"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: ['id', 'url', 'valid'];"></mat-row>
+  <mat-header-row *matHeaderRowDef="['id', 'url', 'votes', 'valid']"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: ['id', 'url', 'votes', 'valid'];"></mat-row>
 </mat-table>
 
 <div style="margin-top: 10px">

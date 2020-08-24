@@ -34,8 +34,18 @@ export class UrlsComponent implements OnInit {
     });
   }
 
-  updateValid(id: string, valid: boolean): void {
-    this.urlService.updateValid(this.profileId, id, this.type.toLowerCase(), valid).subscribe(obj => console.log(obj));
+  updateValid(url: URL): void {
+    this.urlService.updateValid(this.profileId, url.id, this.type.toLowerCase(), url.valid).subscribe(u => url.valid = u.valid);
+  }
+
+  upvote(url: URL): void {
+    this.urlService.updateUpvotes(this.profileId, url.id, this.type.toLowerCase(), url.up_votes + 1)
+      .subscribe(u => url.up_votes = u.up_votes);
+  }
+
+  downvote(url: URL): void {
+    this.urlService.updateDownvotes(this.profileId, url.id, this.type.toLowerCase(), url.down_votes + 1)
+      .subscribe(u => url.down_votes = u.down_votes);
   }
 
 

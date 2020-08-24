@@ -26,14 +26,28 @@ export class UrlService {
       id: '', // placeholder
       url: newURL,
       valid: false, // placeholder
+      up_votes: 0,
+      down_votes: 0
     };
 
     return this.http.post<URL>(`${environment.apiUrl}/profiles/${profileId}/${type}`, data, this.httpOptions);
   }
 
-  updateValid(profileId: string, id: string, type: string, valid: boolean): Observable<Object> {
+  updateValid(profileId: string, id: string, type: string, valid: boolean): Observable<URL> {
     const url = `${environment.apiUrl}/profiles/${profileId}/${type}/${id}/${valid}`;
 
-    return this.http.put(url, null);
+    return this.http.put<URL>(url, null);
+  }
+
+  updateUpvotes(profileId: string, id: string, type: string, votes: number): Observable<URL> {
+    const url = `${environment.apiUrl}/profiles/${profileId}/${type}/${id}/upvotes`;
+
+    return this.http.patch<URL>(url, {votes});
+  }
+
+  updateDownvotes(profileId: string, id: string, type: string, votes: number): Observable<URL> {
+    const url = `${environment.apiUrl}/profiles/${profileId}/${type}/${id}/downvotes`;
+
+    return this.http.patch<URL>(url, {votes});
   }
 }

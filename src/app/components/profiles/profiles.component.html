@@ -13,6 +13,12 @@
       <mat-cell *matCellDef="let profile"><a routerLink="/profiles/{{profile.id}}"> {{profile.num_gscholar}} </a></mat-cell>
     </ng-container>
 
+    <!-- Num LinkedIn Column -->
+    <ng-container matColumnDef="num_linkedin">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Number of LinkedIn URLs  </mat-header-cell>
+      <mat-cell *matCellDef="let profile"><a routerLink="/profiles/{{profile.id}}"> {{profile.num_linkedin}} </a></mat-cell>
+    </ng-container>
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>

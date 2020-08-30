@@ -1,9 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import {Location} from '@angular/common';
 
 import { MatTableDataSource } from '@angular/material/table';
 
 import { URL } from '../../models/url';
 import { UrlService } from '../../services/url/url.service';
+
+import { Profile } from '../../models/profile';
+import { ProfileService } from '../../services/profile/profile.service';
 
 @Component({
   selector: 'app-urls',
@@ -17,14 +22,51 @@ export class UrlsComponent implements OnInit {
   urls: MatTableDataSource<URL> = new MatTableDataSource<URL>();
   newURL: string;
 
-  constructor(private urlService: UrlService) { }
+  prev: Profile;
+  next: Profile;
+
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private location: Location,
+              private urlService: UrlService,
+              private profileService: ProfileService) { }
 
   ngOnInit(): void {
     this.getURLs();
+    this.getPrev();
+    this.getNext();
+
+    this.router.routeReuseStrategy.shouldReuseRoute = () => {
+      return false;
+    };
   }
 
   getURLs(): void {
     this.urlService.getURLs(this.profileId, this.type.toLowerCase()).subscribe(urls => this.urls.data = urls);
+  }
+
+  getPrev(): void {
+    this.profileService.getPrevs(this.profileId, this.type.toLowerCase()).subscribe(prevs => {
+      if (prevs.length !== 0) {
+        this.prev = prevs[0];
+      }
+    });
+  }
+
+  getNext(): void {
+    this.profileService.getNexts(this.profileId, this.type.toLowerCase()).subscribe(nexts => {
+      if (nexts.length !== 0) {
+        this.next = nexts[0];
+      }
+    });
+  }
+
+  goPrev(): void {
+    this.router.navigate([this.location.normalize(`/profiles/${this.prev.id}`)]);
+  }
+
+  goNext(): void {
+    this.router.navigate([this.location.normalize(`/profiles/${this.next.id}`)]);
   }
 
   addURL(): void {

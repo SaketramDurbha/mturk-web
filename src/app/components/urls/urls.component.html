@@ -36,3 +36,6 @@
 
   <button mat-raised-button color="primary" (click)="addURL()">Submit</button>
 </div>
+
+<button mat-raised-button color="primary" [disabled]="prev == null" (click)="goPrev()">Prev Empty</button>
+<button mat-raised-button color="primary" [disabled]="next == null" (click)="goNext()">Next Empty</button>

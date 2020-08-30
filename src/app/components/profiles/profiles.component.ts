@@ -10,7 +10,7 @@ import {Profile} from '../../models/profile';
 })
 export class ProfilesComponent implements OnInit {
   profiles: Profile[];
-  displayedColumns: string[] = ['id'];
+  displayedColumns: string[] = ['id', 'num_gscholar'];
 
   constructor(private profileService: ProfileService) { }
 

@@ -1,16 +1,16 @@
 <div id="content">
   <h2>Profiles</h2>
-  <mat-table [dataSource]="profiles" class="mat-elevation-z8">
+  <mat-table [dataSource]="profiles" matSort class="mat-elevation-z8">
     <!-- ID Column -->
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef> ID  </mat-header-cell>
-      <mat-cell *matCellDef="let profile"> <a routerLink="/profiles/{{profile.id}}"> {{profile.id}} </a></mat-cell>
+      <mat-cell *matCellDef="let profile"><a routerLink="/profiles/{{profile.id}}"> {{profile.id}} </a></mat-cell>
     </ng-container>
 
     <!-- Num GScholar Column -->
     <ng-container matColumnDef="num_gscholar">
-      <mat-header-cell *matHeaderCellDef> Number of GScholar URLs  </mat-header-cell>
-      <mat-cell *matCellDef="let profile"> <a routerLink="/profiles/{{profile.id}}"> {{profile.num_gscholar}} </a></mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Number of GScholar URLs  </mat-header-cell>
+      <mat-cell *matCellDef="let profile"><a routerLink="/profiles/{{profile.id}}"> {{profile.num_gscholar}} </a></mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

@@ -13,7 +13,7 @@ import { ProfileService } from '../../services/profile/profile.service';
 })
 export class ProfilesComponent implements OnInit {
   profiles: MatTableDataSource<Profile> = new MatTableDataSource<Profile>();
-  displayedColumns: string[] = ['id', 'num_gscholar', 'num_linkedin'];
+  displayedColumns: string[] = ['id', 'num_gscholar', 'num_linkedin', 'num_researchgate', 'num_microsoft', 'num_website', 'num_cv', 'num_dissertation'];
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 

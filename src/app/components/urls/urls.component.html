@@ -1,9 +1,14 @@
 <h2>{{type}} URLs</h2>
 
 <mat-table [dataSource]="urls" class="mat-elevation-z8">
-  <ng-container matColumnDef="{{column}}" *ngFor="let column of ['id', 'url']">
-    <mat-header-cell *matHeaderCellDef> {{column}} </mat-header-cell>
-    <mat-cell *matCellDef="let url"> {{url[column]}} </mat-cell>
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+    <mat-cell *matCellDef="let url"> {{url.id}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="url">
+    <mat-header-cell *matHeaderCellDef> URL </mat-header-cell>
+    <mat-cell *matCellDef="let url"> <a [href]="url.url" target="_blank">{{url.url}}</a> </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="votes">

@@ -1,5 +1,5 @@
 <div id="content" class="hello">
-  <mat-card>
+  <mat-card style="width: 100%">
     <mat-card-header>
       <mat-card-title>Observations</mat-card-title>
     </mat-card-header>
@@ -9,29 +9,23 @@
           <mat-header-cell *matHeaderCellDef> {{column}} </mat-header-cell>
           <mat-cell *matCellDef="let observation"> {{observation[column]}} </mat-cell>
         </ng-container>
-
-        <ng-container matColumnDef="google_search">
-          <mat-cell *matCellDef="let observation" [attr.colspan]="displayedObservationColumns.length">
-            <a [href]="googleLink(observation)" target="_blank"> {{googleLink(observation)}}</a>
-          </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="gscholar_search">
-          <mat-cell *matCellDef="let observation" [attr.colspan]="displayedObservationColumns.length">
-            <a [href]="gscholarLink(observation)" target="_blank"> {{gscholarLink(observation)}}</a>
-          </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="linkedin_search">
-          <mat-cell *matCellDef="let observation" [attr.colspan]="displayedObservationColumns.length">
-            <a [href]="linkedinLink(observation)" target="_blank"> {{linkedinLink(observation)}}</a>
-          </mat-cell>
-        </ng-container>
-
         <mat-header-row *matHeaderRowDef="displayedObservationColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedObservationColumns;"></mat-row>
-        <mat-row *matRowDef="let row; columns: displayedSearchURLColumns"></mat-row>
       </mat-table>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="observations !== undefined && observations.length !== 0" style="width: 100%">
+    <mat-card-header>
+      <mat-card-title>Search URLs</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item> <a [href]="googleLink(observations[observations.length-1])" target="_blank"> {{googleLink(observations[observations.length-1])}}</a> </mat-list-item>
+        <mat-list-item> <a [href]="gscholarLink(observations[observations.length-1])" target="_blank"> {{gscholarLink(observations[observations.length-1])}}</a> </mat-list-item>
+        <mat-list-item> <a [href]="linkedinLink(observations[observations.length-1])" target="_blank"> {{linkedinLink(observations[observations.length-1])}}</a> </mat-list-item>
+        <mat-list-item> <a [href]="researchgateLink(observations[observations.length-1])" target="_blank"> {{researchgateLink(observations[observations.length-1])}}</a> </mat-list-item>
+      </mat-list>
     </mat-card-content>
   </mat-card>
 

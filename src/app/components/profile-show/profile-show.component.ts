@@ -15,8 +15,6 @@ export class ProfileShowComponent implements OnInit {
   observations: Observation[];
   displayedObservationColumns: string[] = ['id', 'first_name', 'last_name', 'affiliation', 'city', 'country', 'email'];
 
-  displayedSearchURLColumns: string[] = ['google_search', 'gscholar_search', 'linkedin_search'];
-
   constructor(
     private route: ActivatedRoute,
     private observationService: ObservationService
@@ -43,6 +41,11 @@ export class ProfileShowComponent implements OnInit {
   linkedinLink(observation: Observation): string {
     const q = [observation.first_name, observation.last_name].join(' ');
     return `https://www.linkedin.com/search/results/all/?keywords=${q}`;
+  }
+
+  researchgateLink(observation: Observation): string {
+    const q = [observation.first_name, observation.last_name].join(' ');
+    return `https://www.researchgate.net/search/researcher?q=${q}`;
   }
 
 }

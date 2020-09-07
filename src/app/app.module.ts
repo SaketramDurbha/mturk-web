@@ -21,6 +21,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { MatCardModule } from '@angular/material/card';
     MatButtonModule,
     MatCheckboxModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

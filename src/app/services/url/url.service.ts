@@ -18,7 +18,7 @@ export class UrlService {
   constructor(private http: HttpClient) { }
 
   getURLs(profileId: string, type: string): Observable<URL[]> {
-    return this.http.get<URL[]>(`${environment.apiUrl}/profiles/${profileId}/${type}`);
+    return this.http.get<URL[]>(`${environment.apiUrl}/profiles/${profileId}/urls/${type}`);
   }
 
   addURL(profileId: string, newURL: string, type: string): Observable<URL> {
@@ -30,23 +30,29 @@ export class UrlService {
       down_votes: 0
     };
 
-    return this.http.post<URL>(`${environment.apiUrl}/profiles/${profileId}/${type}`, data, this.httpOptions);
+    return this.http.post<URL>(`${environment.apiUrl}/urls/profiles/${profileId}/${type}`, data, this.httpOptions);
+  }
+
+  updateNoneFound(profileId: string, type: string, noneFound: boolean): Observable<boolean> {
+    const url = `${environment.apiUrl}/profiles/${profileId}/urls/${type}/nonefound`;
+
+    return this.http.patch<boolean>(url, {noneFound});
   }
 
   updateValid(profileId: string, id: string, type: string, valid: boolean): Observable<URL> {
-    const url = `${environment.apiUrl}/profiles/${profileId}/${type}/${id}/${valid}`;
+    const url = `${environment.apiUrl}/profiles/${profileId}/urls/${type}/${id}/valid`;
 
-    return this.http.put<URL>(url, null);
+    return this.http.patch<URL>(url, {valid});
   }
 
   updateUpvotes(profileId: string, id: string, type: string, votes: number): Observable<URL> {
-    const url = `${environment.apiUrl}/profiles/${profileId}/${type}/${id}/upvotes`;
+    const url = `${environment.apiUrl}/profiles/${profileId}/urls/${type}/${id}/upvotes`;
 
     return this.http.patch<URL>(url, {votes});
   }
 
   updateDownvotes(profileId: string, id: string, type: string, votes: number): Observable<URL> {
-    const url = `${environment.apiUrl}/profiles/${profileId}/${type}/${id}/downvotes`;
+    const url = `${environment.apiUrl}/profiles/${profileId}/urls/${type}/${id}/downvotes`;
 
     return this.http.patch<URL>(url, {votes});
   }

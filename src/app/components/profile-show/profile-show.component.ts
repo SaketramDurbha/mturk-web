@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { Profile } from '../../models/profile';
+import { ProfileService } from '../../services/profile/profile.service';
+
 import { Observation } from '../../models/observation';
 import { ObservationService } from '../../services/observation/observation.service';
 
@@ -11,17 +14,24 @@ import { ObservationService } from '../../services/observation/observation.servi
 })
 export class ProfileShowComponent implements OnInit {
   id = this.route.snapshot.paramMap.get('id');
+  profile: Profile;
 
   observations: Observation[];
   displayedObservationColumns: string[] = ['id', 'first_name', 'last_name', 'affiliation', 'city', 'country', 'email'];
 
   constructor(
     private route: ActivatedRoute,
+    private profilesService: ProfileService,
     private observationService: ObservationService
   ) { }
 
   ngOnInit(): void {
+    this.getProfile();
     this.getObservations();
+  }
+
+  getProfile(): void {
+    this.profilesService.getProfile(this.id).subscribe(profile => this.profile = profile);
   }
 
   getObservations(): void {

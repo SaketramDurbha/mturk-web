@@ -29,11 +29,11 @@
     </mat-card-content>
   </mat-card>
 
-  <app-urls [profileId]="id" type="GScholar"></app-urls>
-  <app-urls [profileId]="id" type="LinkedIn"></app-urls>
-  <app-urls [profileId]="id" type="ResearchGate"></app-urls>
-  <app-urls [profileId]="id" type="Microsoft"></app-urls>
-  <app-urls [profileId]="id" type="Website"></app-urls>
-  <app-urls [profileId]="id" type="CV"></app-urls>
-  <app-urls [profileId]="id" type="Dissertation"></app-urls>
+  <app-urls *ngIf="profile" [profile]="profile" type="GScholar"></app-urls>
+  <app-urls *ngIf="profile" [profile]="profile" type="LinkedIn"></app-urls>
+  <app-urls *ngIf="profile" [profile]="profile" type="ResearchGate"></app-urls>
+  <app-urls *ngIf="profile" [profile]="profile" type="Microsoft"></app-urls>
+  <app-urls *ngIf="profile" [profile]="profile" type="Website"></app-urls>
+  <app-urls *ngIf="profile" [profile]="profile" type="CV"></app-urls>
+  <app-urls *ngIf="profile" [profile]="profile" type="Dissertation"></app-urls>
 </div>

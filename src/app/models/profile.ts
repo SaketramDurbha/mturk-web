@@ -7,4 +7,6 @@ export interface Profile {
   num_website: number;
   num_cv: number;
   num_dissertation: number;
+
+  nonefound_gscholar: boolean;
 }

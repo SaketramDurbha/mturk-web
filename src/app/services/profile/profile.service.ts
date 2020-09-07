@@ -20,6 +20,10 @@ export class ProfileService {
     return this.http.get<Profile[]>(this.profilesUrl);
   }
 
+  getProfile(id: string): Observable<Profile> {
+    return this.http.get<Profile>(this.profilesUrl + `/${id}`);
+  }
+
   getPrevs(id: string, type: string): Observable<Profile[]> {
     const params = new HttpParams().set('before', id).set('type', type);
     return this.http.get<Profile[]>(this.paginateUrl, { params });

@@ -16,6 +16,7 @@ import { ProfileService } from '../../services/profile/profile.service';
   styleUrls: ['./urls.component.scss']
 })
 export class UrlsComponent implements OnInit {
+  @Input() profile: Profile;
   @Input() profileId: string;
   @Input() type: string;
 
@@ -25,6 +26,8 @@ export class UrlsComponent implements OnInit {
   prev: Profile;
   next: Profile;
 
+  noneFound: boolean;
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private location: Location,
@@ -32,9 +35,10 @@ export class UrlsComponent implements OnInit {
               private profileService: ProfileService) { }
 
   ngOnInit(): void {
+    this.noneFound = (this.profile[`nonefound_${this.type.toLowerCase()}` as keyof Profile] as boolean);
+
     this.getURLs();
-    this.getPrev();
-    this.getNext();
+    this.getPaginates();
 
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
@@ -42,19 +46,17 @@ export class UrlsComponent implements OnInit {
   }
 
   getURLs(): void {
-    this.urlService.getURLs(this.profileId, this.type.toLowerCase()).subscribe(urls => this.urls.data = urls);
+    this.urlService.getURLs(this.profile.id, this.type.toLowerCase()).subscribe(urls => this.urls.data = urls);
   }
 
-  getPrev(): void {
-    this.profileService.getPrevs(this.profileId, this.type.toLowerCase()).subscribe(prevs => {
+  getPaginates(): void {
+    this.profileService.getPrevs(this.profile.id, this.type.toLowerCase()).subscribe(prevs => {
       if (prevs.length !== 0) {
         this.prev = prevs[0];
       }
     });
-  }
 
-  getNext(): void {
-    this.profileService.getNexts(this.profileId, this.type.toLowerCase()).subscribe(nexts => {
+    this.profileService.getNexts(this.profile.id, this.type.toLowerCase()).subscribe(nexts => {
       if (nexts.length !== 0) {
         this.next = nexts[0];
       }
@@ -70,23 +72,28 @@ export class UrlsComponent implements OnInit {
   }
 
   addURL(): void {
-    this.urlService.addURL(this.profileId, this.newURL, this.type.toLowerCase()).subscribe(url => {
+    this.urlService.addURL(this.profile.id, this.newURL, this.type.toLowerCase()).subscribe(url => {
       this.urls.data.push(url);
       this.urls.data = this.urls.data;
     });
   }
 
+  updateNoneFound(): void {
+    this.urlService.updateNoneFound(this.profile.id, this.type.toLowerCase(), this.noneFound)
+      .subscribe(noneFound => this.noneFound = noneFound);
+  }
+
   updateValid(url: URL): void {
-    this.urlService.updateValid(this.profileId, url.id, this.type.toLowerCase(), url.valid).subscribe(u => url.valid = u.valid);
+    this.urlService.updateValid(this.profile.id, url.id, this.type.toLowerCase(), url.valid).subscribe(u => url.valid = u.valid);
   }
 
   upvote(url: URL): void {
-    this.urlService.updateUpvotes(this.profileId, url.id, this.type.toLowerCase(), url.up_votes + 1)
+    this.urlService.updateUpvotes(this.profile.id, url.id, this.type.toLowerCase(), url.up_votes + 1)
       .subscribe(u => url.up_votes = u.up_votes);
   }
 
   downvote(url: URL): void {
-    this.urlService.updateDownvotes(this.profileId, url.id, this.type.toLowerCase(), url.down_votes + 1)
+    this.urlService.updateDownvotes(this.profile.id, url.id, this.type.toLowerCase(), url.down_votes + 1)
       .subscribe(u => url.down_votes = u.down_votes);
   }
 

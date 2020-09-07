@@ -1,34 +1,39 @@
-<div id="content">
-  <h2>Observations</h2>
+<div id="content" class="hello">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Observations</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-table [dataSource]="observations" class="mat-elevation-z8" multiTemplateDataRows>
+        <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedObservationColumns">
+          <mat-header-cell *matHeaderCellDef> {{column}} </mat-header-cell>
+          <mat-cell *matCellDef="let observation"> {{observation[column]}} </mat-cell>
+        </ng-container>
 
-  <mat-table [dataSource]="observations" class="mat-elevation-z8" multiTemplateDataRows>
-    <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedObservationColumns">
-      <mat-header-cell *matHeaderCellDef> {{column}} </mat-header-cell>
-      <mat-cell *matCellDef="let observation"> {{observation[column]}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="google_search">
+          <mat-cell *matCellDef="let observation" [attr.colspan]="displayedObservationColumns.length">
+            <a [href]="googleLink(observation)" target="_blank"> {{googleLink(observation)}}</a>
+          </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="google_search">
-      <mat-cell *matCellDef="let observation" [attr.colspan]="displayedObservationColumns.length">
-        <a [href]="googleLink(observation)" target="_blank"> {{googleLink(observation)}}</a>
-      </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="gscholar_search">
+          <mat-cell *matCellDef="let observation" [attr.colspan]="displayedObservationColumns.length">
+            <a [href]="gscholarLink(observation)" target="_blank"> {{gscholarLink(observation)}}</a>
+          </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="gscholar_search">
-      <mat-cell *matCellDef="let observation" [attr.colspan]="displayedObservationColumns.length">
-        <a [href]="gscholarLink(observation)" target="_blank"> {{gscholarLink(observation)}}</a>
-      </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="linkedin_search">
+          <mat-cell *matCellDef="let observation" [attr.colspan]="displayedObservationColumns.length">
+            <a [href]="linkedinLink(observation)" target="_blank"> {{linkedinLink(observation)}}</a>
+          </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="linkedin_search">
-      <mat-cell *matCellDef="let observation" [attr.colspan]="displayedObservationColumns.length">
-        <a [href]="linkedinLink(observation)" target="_blank"> {{linkedinLink(observation)}}</a>
-      </mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedObservationColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedObservationColumns;"></mat-row>
-    <mat-row *matRowDef="let row; columns: displayedSearchURLColumns"></mat-row>
-  </mat-table>
+        <mat-header-row *matHeaderRowDef="displayedObservationColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedObservationColumns;"></mat-row>
+        <mat-row *matRowDef="let row; columns: displayedSearchURLColumns"></mat-row>
+      </mat-table>
+    </mat-card-content>
+  </mat-card>
 
   <app-urls [profileId]="id" type="GScholar"></app-urls>
   <app-urls [profileId]="id" type="LinkedIn"></app-urls>

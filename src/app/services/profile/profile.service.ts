@@ -25,12 +25,22 @@ export class ProfileService {
   }
 
   getPrevs(id: string, type: string): Observable<Profile[]> {
-    const params = new HttpParams().set('before', id).set('type', type);
+    const params = new HttpParams().set('before', id).set('type', type).set('col', 'num');
     return this.http.get<Profile[]>(this.paginateUrl, { params });
   }
 
   getNexts(id: string, type: string): Observable<Profile[]> {
-    const params = new HttpParams().set('after', id).set('type', type);
+    const params = new HttpParams().set('after', id).set('type', type).set('col', 'num');
+    return this.http.get<Profile[]>(this.paginateUrl, { params });
+  }
+
+  getPrevNoneFounds(id: string, type: string): Observable<Profile[]> {
+    const params = new HttpParams().set('before', id).set('type', type).set('col', 'nonefound');
+    return this.http.get<Profile[]>(this.paginateUrl, { params });
+  }
+
+  getNextNoneFounds(id: string, type: string): Observable<Profile[]> {
+    const params = new HttpParams().set('after', id).set('type', type).set('col', 'nonefound');
     return this.http.get<Profile[]>(this.paginateUrl, { params });
   }
 }

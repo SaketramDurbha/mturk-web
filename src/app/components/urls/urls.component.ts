@@ -26,6 +26,9 @@ export class UrlsComponent implements OnInit {
   prev: Profile;
   next: Profile;
 
+  prevNoneFound: Profile;
+  nextNoneFound: Profile;
+
   noneFound: boolean;
 
   constructor(private router: Router,
@@ -61,14 +64,22 @@ export class UrlsComponent implements OnInit {
         this.next = nexts[0];
       }
     });
+
+    this.profileService.getPrevNoneFounds(this.profile.id, this.type.toLowerCase()).subscribe(prevs => {
+      if (prevs.length !== 0) {
+        this.prevNoneFound = prevs[0];
+      }
+    });
+
+    this.profileService.getNextNoneFounds(this.profile.id, this.type.toLowerCase()).subscribe(nexts => {
+      if (nexts.length !== 0) {
+        this.nextNoneFound = nexts[0];
+      }
+    });
   }
 
-  goPrev(): void {
-    this.router.navigate([this.location.normalize(`/profiles/${this.prev.id}`)]);
-  }
-
-  goNext(): void {
-    this.router.navigate([this.location.normalize(`/profiles/${this.next.id}`)]);
+  go(profile: Profile): void {
+    this.router.navigate([this.location.normalize(`/profiles/${profile.id}`)]);
   }
 
   addURL(): void {

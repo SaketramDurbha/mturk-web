@@ -30,7 +30,7 @@ export class UrlService {
       down_votes: 0
     };
 
-    return this.http.post<URL>(`${environment.apiUrl}/urls/profiles/${profileId}/${type}`, data, this.httpOptions);
+    return this.http.post<URL>(`${environment.apiUrl}/profiles/${profileId}/urls/${type}`, data, this.httpOptions);
   }
 
   updateNoneFound(profileId: string, type: string, noneFound: boolean): Observable<boolean> {

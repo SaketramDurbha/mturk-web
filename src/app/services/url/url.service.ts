@@ -24,10 +24,12 @@ export class UrlService {
   addURL(profileId: string, newURL: string, type: string): Observable<URL> {
     const data: URL = {
       id: '', // placeholder
+      index: 0, // placeholder
       url: newURL,
       valid: false, // placeholder
       up_votes: 0,
-      down_votes: 0
+      down_votes: 0,
+      file: 0 // placeholder
     };
 
     return this.http.post<URL>(`${environment.apiUrl}/profiles/${profileId}/urls/${type}`, data, this.httpOptions);

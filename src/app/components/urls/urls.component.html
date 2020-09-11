@@ -5,9 +5,9 @@
 
   <mat-card-content>
     <mat-table [dataSource]="urls" class="mat-elevation-z8">
-      <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
-        <mat-cell *matCellDef="let url"> {{url.id}} </mat-cell>
+      <ng-container matColumnDef="index">
+        <mat-header-cell *matHeaderCellDef> Index </mat-header-cell>
+        <mat-cell *matCellDef="let url"> {{url.index}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="url">
@@ -33,8 +33,13 @@
         </mat-cell>
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="['id', 'url', 'votes', 'valid']"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: ['id', 'url', 'votes', 'valid'];"></mat-row>
+      <ng-container matColumnDef="file">
+        <mat-header-cell *matHeaderCellDef> File </mat-header-cell>
+        <mat-cell *matCellDef="let url"> <a [href]="url.file" target="_blank">{{url.file}}</a> </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="['index', 'url', 'votes', 'valid', 'file']"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ['index', 'url', 'votes', 'valid', 'file'];"></mat-row>
     </mat-table>
 
     <div style="margin-top: 10px; display: flex; flex-direction: column; align-items: start">

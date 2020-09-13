@@ -49,7 +49,7 @@ export class ProfileShowComponent implements OnInit {
   }
 
   linkedinLink(observation: Observation): string {
-    const q = [observation.first_name, observation.last_name].join(' ');
+    const q = [observation.first_name, observation.last_name, observation.affiliation].join(' ');
     return `https://www.linkedin.com/search/results/all/?keywords=${q}`;
   }
 

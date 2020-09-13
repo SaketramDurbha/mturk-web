@@ -23,8 +23,8 @@ export class UrlsComponent implements OnInit {
   urls: MatTableDataSource<URL> = new MatTableDataSource<URL>();
   newURL: string;
 
-  prev: Profile;
-  next: Profile;
+  prevNotNoneFound: Profile;
+  nextNotNoneFound: Profile;
 
   prevNoneFound: Profile;
   nextNoneFound: Profile;
@@ -53,15 +53,15 @@ export class UrlsComponent implements OnInit {
   }
 
   getPaginates(): void {
-    this.profileService.getPrevs(this.profile.id, this.type.toLowerCase()).subscribe(prevs => {
+    this.profileService.getPrevNotNoneFounds(this.profile.id, this.type.toLowerCase()).subscribe(prevs => {
       if (prevs.length !== 0) {
-        this.prev = prevs[0];
+        this.prevNotNoneFound = prevs[0];
       }
     });
 
-    this.profileService.getNexts(this.profile.id, this.type.toLowerCase()).subscribe(nexts => {
+    this.profileService.getNextNotNoneFounds(this.profile.id, this.type.toLowerCase()).subscribe(nexts => {
       if (nexts.length !== 0) {
-        this.next = nexts[0];
+        this.nextNotNoneFound = nexts[0];
       }
     });
 
@@ -71,7 +71,7 @@ export class UrlsComponent implements OnInit {
       }
     });
 
-    this.profileService.getNextNoneFounds(this.profile.id, this.type.toLowerCase()).subscribe(nexts => {
+    this.profileService.getNextsNoneFounds(this.profile.id, this.type.toLowerCase()).subscribe(nexts => {
       if (nexts.length !== 0) {
         this.nextNoneFound = nexts[0];
       }

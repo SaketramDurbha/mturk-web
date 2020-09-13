@@ -56,10 +56,10 @@
     </div>
 
     <mat-card-actions>
-      <button mat-button color="primary" [disabled]="prevNoneFound == null" (click)="go(prevNoneFound)">Prev Not None Found</button>
-      <button mat-button color="primary" [disabled]="prev == null" (click)="go(prev)">Prev Empty</button>
-      <button mat-button color="primary" [disabled]="next == null" (click)="go(next)">Next Empty</button>
-      <button mat-button color="primary" [disabled]="nextNoneFound == null" (click)="go(nextNoneFound)">Next Not None Found</button>
+      <button mat-button color="primary" [disabled]="prevNoneFound == null" (click)="go(prevNoneFound)">Prev Empty (Searched)</button>
+      <button mat-button color="primary" [disabled]="prevNotNoneFound == null" (click)="go(prevNotNoneFound)">Prev Empty (Not Searched)</button>
+      <button mat-button color="primary" [disabled]="nextNotNoneFound == null" (click)="go(nextNotNoneFound)">Next Empty (Not Searched)</button>
+      <button mat-button color="primary" [disabled]="nextNoneFound == null" (click)="go(nextNoneFound)">Next Empty (Searched)</button>
     </mat-card-actions>
   </mat-card-content>
 </mat-card>

@@ -18,9 +18,10 @@
       <ng-container matColumnDef="votes">
         <mat-header-cell *matHeaderCellDef> Votes </mat-header-cell>
         <mat-cell *matCellDef="let url">
+          {{url.down_votes}}
           <button mat-icon-button (click)="downvote(url)"><mat-icon>arrow_downward</mat-icon></button>
-          {{url.up_votes - url.down_votes}}
           <button mat-icon-button (click)="upvote(url)"><mat-icon>arrow_upward</mat-icon></button>
+          {{url.up_votes}}
         </mat-cell>
       </ng-container>
 

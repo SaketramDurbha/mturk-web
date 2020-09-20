@@ -28,7 +28,6 @@ export class UrlsComponent implements OnInit {
   prevNoneFound: Profile;
   nextNoneFound: Profile;
 
-  noneFound: boolean;
   noneFoundUp: number;
   noneFoundDown: number;
 
@@ -39,7 +38,6 @@ export class UrlsComponent implements OnInit {
               private profileService: ProfileService) { }
 
   ngOnInit(): void {
-    this.noneFound = (this.profile[`nonefound_${this.type.toLowerCase()}` as keyof Profile] as boolean);
     this.noneFoundUp = (this.profile[`nonefound_${this.type.toLowerCase()}_up` as keyof Profile] as number) || 0;
     this.noneFoundDown = (this.profile[`nonefound_${this.type.toLowerCase()}_down` as keyof Profile] as number) || 0;
 
@@ -108,11 +106,6 @@ export class UrlsComponent implements OnInit {
     });
   }
 
-  updateNoneFound(): void {
-    this.urlService.updateNoneFound(this.profile.id, this.type.toLowerCase(), this.noneFound)
-      .subscribe(noneFound => this.noneFound = noneFound);
-  }
-
   updateValid(url: URL): void {
     this.urlService.updateValid(this.profile.id, url.id, this.type.toLowerCase(), url.valid).subscribe(u => url.valid = u.valid);
   }
@@ -139,6 +132,4 @@ export class UrlsComponent implements OnInit {
     this.profileService.updateNoneFoundDownvotes(this.profile.id, url.id, this.type.toLowerCase(), url.down_votes + 1)
       .subscribe(u => url.down_votes = u.down_votes);
   }
-
-
 }

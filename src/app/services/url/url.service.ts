@@ -35,12 +35,6 @@ export class UrlService {
     return this.http.post<URL>(`${environment.apiUrl}/profiles/${profileId}/urls/${type}`, data, this.httpOptions);
   }
 
-  updateNoneFound(profileId: string, type: string, noneFound: boolean): Observable<boolean> {
-    const url = `${environment.apiUrl}/profiles/${profileId}/urls/${type}/nonefound`;
-
-    return this.http.patch<boolean>(url, {noneFound});
-  }
-
   updateValid(profileId: string, id: string, type: string, valid: boolean): Observable<URL> {
     const url = `${environment.apiUrl}/profiles/${profileId}/urls/${type}/${id}/valid`;
 

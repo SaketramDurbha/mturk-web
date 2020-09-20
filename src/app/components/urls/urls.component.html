@@ -61,12 +61,7 @@
         <mat-label>New {{type}} URL</mat-label>
         <input matInput type="url" [(ngModel)]="newURL">
       </mat-form-field>
-
       <button mat-raised-button color="primary" (click)="addURL()">Submit</button>
-
-      <mat-checkbox [(ngModel)]="this.noneFound"
-                    (change)="updateNoneFound()"
-                    style="padding-top: 1.25em">None Found</mat-checkbox>
     </div>
 
     <mat-card-actions>

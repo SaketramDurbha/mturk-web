@@ -8,14 +8,6 @@ export interface Profile {
   num_cv: number;
   num_dissertation: number;
 
-  nonefound_gscholar: boolean;
-  nonefound_linkedin: boolean;
-  nonefound_researchgate: boolean;
-  nonefound_microsoft: boolean;
-  nonefound_website: boolean;
-  nonefound_cv: boolean;
-  nonefound_dissertation: boolean;
-
   nonefound_gscholar_up: number;
   nonefound_linkedin_up: number;
   nonefound_researchgate_up: number;

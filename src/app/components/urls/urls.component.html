@@ -7,12 +7,19 @@
     <mat-table [dataSource]="urls" class="mat-elevation-z8">
       <ng-container matColumnDef="index">
         <mat-header-cell *matHeaderCellDef> Index </mat-header-cell>
-        <mat-cell *matCellDef="let url"> {{url.index}} </mat-cell>
+        <mat-cell *matCellDef="let url"> <ng-template [ngIf]="url.index !== -1">{{url.index}} </ng-template> </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="url">
         <mat-header-cell *matHeaderCellDef> URL </mat-header-cell>
-        <mat-cell *matCellDef="let url"> <a [href]="url.url" target="_blank">{{url.url}}</a> </mat-cell>
+        <mat-cell>URL</mat-cell>
+        <mat-cell *matCellDef="let url">
+          <div *ngIf="url.index !== -1; then thenBlock else elseBlock"></div>
+          <ng-template #thenBlock><a [href]="url.url" target="_blank">{{url.url}}</a></ng-template>
+          <ng-template #elseBlock>{{url.url}}</ng-template>
+        </mat-cell>
+
+
       </ng-container>
 
       <ng-container matColumnDef="votes">
@@ -28,15 +35,21 @@
       <ng-container matColumnDef="valid">
         <mat-header-cell *matHeaderCellDef> Valid </mat-header-cell>
         <mat-cell *matCellDef="let url">
-          <mat-checkbox [(ngModel)]="url.valid"
+          <ng-template [ngIf]="url.index !== -1">
+            <mat-checkbox [(ngModel)]="url.valid"
                         (change)="updateValid(url)">
-          </mat-checkbox>
+            </mat-checkbox>
+          </ng-template>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="file">
         <mat-header-cell *matHeaderCellDef> File </mat-header-cell>
-        <mat-cell *matCellDef="let url"> <a [href]="url.file" target="_blank">{{url.file}}</a> </mat-cell>
+        <mat-cell *matCellDef="let url">
+          <ng-template [ngIf]="url.index !== -1">
+            <a [href]="url.file" target="_blank">{{url.file}}</a>
+          </ng-template>
+        </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="['index', 'url', 'votes', 'valid', 'file']"></mat-header-row>

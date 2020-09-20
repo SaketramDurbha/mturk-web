@@ -17,7 +17,6 @@ import { ProfileService } from '../../services/profile/profile.service';
 })
 export class UrlsComponent implements OnInit {
   @Input() profile: Profile;
-  @Input() profileId: string;
   @Input() type: string;
 
   urls: MatTableDataSource<URL> = new MatTableDataSource<URL>();
@@ -30,6 +29,8 @@ export class UrlsComponent implements OnInit {
   nextNoneFound: Profile;
 
   noneFound: boolean;
+  noneFoundUp: number;
+  noneFoundDown: number;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -39,6 +40,8 @@ export class UrlsComponent implements OnInit {
 
   ngOnInit(): void {
     this.noneFound = (this.profile[`nonefound_${this.type.toLowerCase()}` as keyof Profile] as boolean);
+    this.noneFoundUp = (this.profile[`nonefound_${this.type.toLowerCase()}_up` as keyof Profile] as number) || 0;
+    this.noneFoundDown = (this.profile[`nonefound_${this.type.toLowerCase()}_down` as keyof Profile] as number) || 0;
 
     this.getURLs();
     this.getPaginates();
@@ -49,7 +52,17 @@ export class UrlsComponent implements OnInit {
   }
 
   getURLs(): void {
-    this.urlService.getURLs(this.profile.id, this.type.toLowerCase()).subscribe(urls => this.urls.data = urls);
+    const first: URL = {
+      id: '',
+      index: -1,
+      url: 'None Found',
+      valid: true,
+      up_votes: this.noneFoundUp,
+      down_votes: this.noneFoundDown,
+      file: 0,
+    };
+
+    this.urlService.getURLs(this.profile.id, this.type.toLowerCase()).subscribe(urls => this.urls.data =  [first].concat(urls));
   }
 
   getPaginates(): void {
@@ -86,6 +99,12 @@ export class UrlsComponent implements OnInit {
     this.urlService.addURL(this.profile.id, this.newURL, this.type.toLowerCase()).subscribe(url => {
       this.urls.data.push(url);
       this.urls.data = this.urls.data;
+    }, response => {
+        if (response.status === 422) {
+          alert('error occurred: ' + response.error.message);
+        } else {
+          alert('error occurred');
+        }
     });
   }
 
@@ -99,12 +118,25 @@ export class UrlsComponent implements OnInit {
   }
 
   upvote(url: URL): void {
-    this.urlService.updateUpvotes(this.profile.id, url.id, this.type.toLowerCase(), url.up_votes + 1)
+    if (url.index !== -1) {
+      this.urlService.updateUpvotes(this.profile.id, url.id, this.type.toLowerCase(), url.up_votes + 1)
+        .subscribe(u => url.up_votes = u.up_votes);
+
+      return;
+    }
+
+    this.profileService.updateNoneFoundUpvotes(this.profile.id, url.id, this.type.toLowerCase(), url.up_votes + 1)
       .subscribe(u => url.up_votes = u.up_votes);
   }
 
   downvote(url: URL): void {
-    this.urlService.updateDownvotes(this.profile.id, url.id, this.type.toLowerCase(), url.down_votes + 1)
+    if (url.index !== -1) {
+      this.urlService.updateDownvotes(this.profile.id, url.id, this.type.toLowerCase(), url.down_votes + 1)
+        .subscribe(u => url.down_votes = u.down_votes);
+      return;
+    }
+
+    this.profileService.updateNoneFoundDownvotes(this.profile.id, url.id, this.type.toLowerCase(), url.down_votes + 1)
       .subscribe(u => url.down_votes = u.down_votes);
   }
 

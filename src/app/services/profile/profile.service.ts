@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 import { Profile } from '../../models/profile';
+import {URL} from '../../models/url';
 
 @Injectable({
   providedIn: 'root'
@@ -42,5 +43,17 @@ export class ProfileService {
   getNextsNoneFounds(id: string, type: string): Observable<Profile[]> {
     const params = new HttpParams().set('after', id).set('type', type).set('col', 'nonefound');
     return this.http.get<Profile[]>(this.paginateUrl, { params });
+  }
+
+  updateNoneFoundUpvotes(profileId: string, id: string, type: string, votes: number): Observable<URL> {
+    const url = `${environment.apiUrl}/profiles/${profileId}/urls/${type}/nonefound/upvotes`;
+
+    return this.http.patch<URL>(url, {votes});
+  }
+
+  updateNoneFoundDownvotes(profileId: string, id: string, type: string, votes: number): Observable<URL> {
+    const url = `${environment.apiUrl}/profiles/${profileId}/urls/${type}/nonefound/downvotes`;
+
+    return this.http.patch<URL>(url, {votes});
   }
 }

@@ -57,7 +57,7 @@ export class UrlsComponent implements OnInit {
       valid: true,
       up_votes: this.noneFoundUp,
       down_votes: this.noneFoundDown,
-      file: 0,
+      file: '',
     };
 
     this.urlService.getURLs(this.profile.id, this.type.toLowerCase()).subscribe(urls => this.urls.data =  [first].concat(urls));

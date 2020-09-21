@@ -5,5 +5,5 @@ export interface URL {
   valid: boolean;
   up_votes: number;
   down_votes: number;
-  file: number;
+  file: string;
 }

@@ -29,7 +29,7 @@ export class UrlService {
       valid: false, // placeholder
       up_votes: 0,
       down_votes: 0,
-      file: 0 // placeholder
+      file: '' // placeholder
     };
 
     return this.http.post<URL>(`${environment.apiUrl}/profiles/${profileId}/urls/${type}`, data, this.httpOptions);

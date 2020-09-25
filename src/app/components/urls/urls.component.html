@@ -52,8 +52,30 @@
         </mat-cell>
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="['index', 'url', 'votes', 'valid', 'file']"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: ['index', 'url', 'votes', 'valid', 'file'];"></mat-row>
+      <ng-container matColumnDef="author-id">
+        <mat-header-cell *matHeaderCellDef> Author ID </mat-header-cell>
+        <mat-cell *matCellDef="let url">
+          {{getMicrosoftAuthorId(url)}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="filename">
+        <mat-header-cell *matHeaderCellDef> File Name </mat-header-cell>
+        <mat-cell *matCellDef="let url">
+          {{getFileName(url)}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="uploaded">
+        <mat-header-cell *matHeaderCellDef> Uploaded? </mat-header-cell>
+        <mat-cell *matCellDef="let url">
+          <button mat-raised-button color="primary" (click)="checkUploaded(url)" *ngIf="url.file === '' && url.index !== -1">Uploaded</button>
+        </mat-cell>
+      </ng-container>
+
+
+      <mat-header-row *matHeaderRowDef="tableDisplayCols"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: tableDisplayCols;"></mat-row>
     </mat-table>
 
     <div style="margin-top: 10px; display: flex; flex-direction: column; align-items: start">

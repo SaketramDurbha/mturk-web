@@ -52,4 +52,10 @@ export class UrlService {
 
     return this.http.patch<URL>(url, {votes});
   }
+
+  checkUploaded(profileId: string, id: string, type: string): Observable<URL> {
+    const url = `${environment.apiUrl}/profiles/${profileId}/urls/${type}/${id}/checkuploaded`;
+
+    return this.http.get<URL>(url);
+  }
 }

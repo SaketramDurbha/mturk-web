@@ -31,13 +31,26 @@ export class UrlsComponent implements OnInit {
   noneFoundUp: number;
   noneFoundDown: number;
 
+  tableDisplayCols: string[];
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private location: Location,
               private urlService: UrlService,
-              private profileService: ProfileService) { }
+              private profileService: ProfileService) {}
 
   ngOnInit(): void {
+    this.tableDisplayCols = ['index', 'url', 'votes', 'valid', 'file'];
+
+    if (this.type === 'Microsoft') {
+      this.tableDisplayCols.push('author-id');
+    }
+
+    if (this.type === 'LinkedIn' || this.type === 'ResearchGate' || this.type === 'Microsoft' || this.type === 'CV') {
+      this.tableDisplayCols.push('filename');
+      this.tableDisplayCols.push('uploaded');
+    }
+
     this.noneFoundUp = (this.profile[`nonefound_${this.type.toLowerCase()}_up` as keyof Profile] as number) || 0;
     this.noneFoundDown = (this.profile[`nonefound_${this.type.toLowerCase()}_down` as keyof Profile] as number) || 0;
 
@@ -131,5 +144,40 @@ export class UrlsComponent implements OnInit {
 
     this.profileService.updateNoneFoundDownvotes(this.profile.id, url.id, this.type.toLowerCase(), url.down_votes + 1)
       .subscribe(u => url.down_votes = u.down_votes);
+  }
+
+  getMicrosoftAuthorId(url: URL): string {
+    const regexp: RegExp = /academic.microsoft.com\/author\/(\d+)\//;
+
+    if (url.index === -1 || !regexp.test(url.url)) {
+      return '';
+    }
+
+    return regexp.exec(url.url)[1];
+  }
+
+  getFileName(url: URL): string {
+    if (url.index === -1) {
+      return '';
+    }
+
+    if (url.file !== '') {
+      return '-';
+    }
+
+    return `${this.profile.id}_${this.type}_${url.index}`;
+  }
+
+  checkUploaded(url: URL): void {
+    this.urlService.checkUploaded(this.profile.id, url.id, this.type.toLowerCase())
+      .subscribe(u => {
+        url.file = u.file;
+      }, response => {
+        if (response.status === 422) {
+          alert('error occurred: ' + response.error.message);
+        } else {
+          alert('error occurred');
+        }
+      });
   }
 }

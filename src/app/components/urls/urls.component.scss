@@ -5,3 +5,12 @@ mat-card {
 table {
   width: 100%;
 }
+
+/* Column Widths */
+.mat-column-index, .mat-column-valid {
+  max-width: 64px;
+}
+
+.mat-column-votes {
+  max-width: 128px;
+}

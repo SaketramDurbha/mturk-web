@@ -48,10 +48,7 @@ export class UrlsComponent implements OnInit {
     }
 
     this.tableDisplayCols.push('filename');
-
-    if (this.type === 'LinkedIn' || this.type === 'ResearchGate' || this.type === 'Microsoft' || this.type === 'CV') {
-      this.tableDisplayCols.push('uploaded');
-    }
+    this.tableDisplayCols.push('uploaded');
 
     this.noneFound = (this.profile[`nonefound_${this.type.toLowerCase()}` as keyof Profile] as boolean);
     this.noneFoundUp = (this.profile[`nonefound_${this.type.toLowerCase()}_up` as keyof Profile] as number) || 0;

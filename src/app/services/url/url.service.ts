@@ -26,8 +26,8 @@ export class UrlService {
       id: '', // placeholder
       index: 0, // placeholder
       url: newURL,
-      valid: false, // placeholder
-      up_votes: 0,
+      valid: true, // placeholder
+      up_votes: 1,
       down_votes: 0,
       file: '' // placeholder
     };

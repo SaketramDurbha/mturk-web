@@ -22,12 +22,13 @@ export class UrlsComponent implements OnInit {
   urls: MatTableDataSource<URL> = new MatTableDataSource<URL>();
   newURL: string;
 
-  prevNotNoneFound: Profile;
-  nextNotNoneFound: Profile;
+  prevValid: Profile;
+  nextValid: Profile;
 
-  prevNoneFound: Profile;
-  nextNoneFound: Profile;
+  prevNoneValid: Profile;
+  nextNoneValid: Profile;
 
+  noneFound: boolean;
   noneFoundUp: number;
   noneFoundDown: number;
 
@@ -46,11 +47,13 @@ export class UrlsComponent implements OnInit {
       this.tableDisplayCols.push('author-id');
     }
 
+    this.tableDisplayCols.push('filename');
+
     if (this.type === 'LinkedIn' || this.type === 'ResearchGate' || this.type === 'Microsoft' || this.type === 'CV') {
-      this.tableDisplayCols.push('filename');
       this.tableDisplayCols.push('uploaded');
     }
 
+    this.noneFound = (this.profile[`nonefound_${this.type.toLowerCase()}` as keyof Profile] as boolean);
     this.noneFoundUp = (this.profile[`nonefound_${this.type.toLowerCase()}_up` as keyof Profile] as number) || 0;
     this.noneFoundDown = (this.profile[`nonefound_${this.type.toLowerCase()}_down` as keyof Profile] as number) || 0;
 
@@ -67,7 +70,7 @@ export class UrlsComponent implements OnInit {
       id: '',
       index: -1,
       url: 'None Found',
-      valid: true,
+      valid: this.noneFound,
       up_votes: this.noneFoundUp,
       down_votes: this.noneFoundDown,
       file: '',
@@ -77,27 +80,27 @@ export class UrlsComponent implements OnInit {
   }
 
   getPaginates(): void {
-    this.profileService.getPrevNotNoneFounds(this.profile.id, this.type.toLowerCase()).subscribe(prevs => {
+    this.profileService.getPrevValids(this.profile.id, this.type.toLowerCase()).subscribe(prevs => {
       if (prevs.length !== 0) {
-        this.prevNotNoneFound = prevs[0];
+        this.prevValid = prevs[0];
       }
     });
 
-    this.profileService.getNextNotNoneFounds(this.profile.id, this.type.toLowerCase()).subscribe(nexts => {
+    this.profileService.getNextValids(this.profile.id, this.type.toLowerCase()).subscribe(nexts => {
       if (nexts.length !== 0) {
-        this.nextNotNoneFound = nexts[0];
+        this.nextValid = nexts[0];
       }
     });
 
-    this.profileService.getPrevNoneFounds(this.profile.id, this.type.toLowerCase()).subscribe(prevs => {
+    this.profileService.getPrevNoneValids(this.profile.id, this.type.toLowerCase()).subscribe(prevs => {
       if (prevs.length !== 0) {
-        this.prevNoneFound = prevs[0];
+        this.prevNoneValid = prevs[0];
       }
     });
 
-    this.profileService.getNextsNoneFounds(this.profile.id, this.type.toLowerCase()).subscribe(nexts => {
+    this.profileService.getNextsNoneValids(this.profile.id, this.type.toLowerCase()).subscribe(nexts => {
       if (nexts.length !== 0) {
-        this.nextNoneFound = nexts[0];
+        this.nextNoneValid = nexts[0];
       }
     });
   }
@@ -120,7 +123,13 @@ export class UrlsComponent implements OnInit {
   }
 
   updateValid(url: URL): void {
-    this.urlService.updateValid(this.profile.id, url.id, this.type.toLowerCase(), url.valid).subscribe(u => url.valid = u.valid);
+    if (url.index !== -1) {
+      this.urlService.updateValid(this.profile.id, url.id, this.type.toLowerCase(), url.valid).subscribe(u => url.valid = u.valid);
+      return;
+    }
+
+    this.urlService.updateNoneFound(this.profile.id, this.type.toLowerCase(), url.valid)
+      .subscribe(noneFound => url.valid = noneFound);
   }
 
   upvote(url: URL): void {
@@ -146,6 +155,18 @@ export class UrlsComponent implements OnInit {
       .subscribe(u => url.down_votes = u.down_votes);
   }
 
+  getFileURL(url: URL): string {
+    if (url.index === -1) {
+      return '';
+    }
+
+    if (url.file === '') {
+      return 'not uploaded';
+    }
+
+    return `<a href="${url.file}" target="_blank">${url.file}</a>`;
+  }
+
   getMicrosoftAuthorId(url: URL): string {
     const regexp: RegExp = /academic.microsoft.com\/author\/(\d+)\//;
 
@@ -165,7 +186,7 @@ export class UrlsComponent implements OnInit {
       return '-';
     }
 
-    return `${this.profile.id}_${this.type}_${url.index}`;
+    return `${this.profile.id}_${this.type.toLowerCase()}_${url.index}`;
   }
 
   checkUploaded(url: URL): void {

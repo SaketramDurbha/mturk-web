@@ -58,4 +58,9 @@ export class ProfileShowComponent implements OnInit {
     return `https://www.researchgate.net/search/researcher?q=${q}`;
   }
 
+  microsoftLink(observation: Observation): string {
+    const q = [observation.first_name, observation.last_name].join(' ');
+    return `https://academic.microsoft.com/search?q=${q}`;
+  }
+
 }

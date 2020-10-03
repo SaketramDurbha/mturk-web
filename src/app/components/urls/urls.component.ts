@@ -28,6 +28,9 @@ export class UrlsComponent implements OnInit {
   prevNoneValid: Profile;
   nextNoneValid: Profile;
 
+  prevNonEmpty: Profile;
+  nextNonEmpty: Profile;
+
   noneFound: boolean;
   noneFoundUp: number;
   noneFoundDown: number;
@@ -95,9 +98,21 @@ export class UrlsComponent implements OnInit {
       }
     });
 
-    this.profileService.getNextsNoneValids(this.profile.id, this.type.toLowerCase()).subscribe(nexts => {
+    this.profileService.getNextNoneValids(this.profile.id, this.type.toLowerCase()).subscribe(nexts => {
       if (nexts.length !== 0) {
         this.nextNoneValid = nexts[0];
+      }
+    });
+
+    this.profileService.getPrevNonEmptys(this.profile.id, this.type.toLowerCase()).subscribe(prevs => {
+      if (prevs.length !== 0) {
+        this.prevNonEmpty = prevs[0];
+      }
+    });
+
+    this.profileService.getNextNonEmptys(this.profile.id, this.type.toLowerCase()).subscribe(nexts => {
+      if (nexts.length !== 0) {
+        this.nextNonEmpty = nexts[0];
       }
     });
   }

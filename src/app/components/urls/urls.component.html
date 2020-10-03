@@ -91,10 +91,12 @@
     </div>
 
     <mat-card-actions>
+      <button mat-button color="primary" [disabled]="prevNonEmpty == null" (click)="go(prevNonEmpty)">Prev Non-Empty</button>
       <button mat-button color="primary" [disabled]="prevNoneValid == null" (click)="go(prevNoneValid)">Prev Empty (None Valid)</button>
       <button mat-button color="primary" [disabled]="prevValid == null" (click)="go(prevValid)">Prev Empty (Valid)</button>
       <button mat-button color="primary" [disabled]="nextValid == null" (click)="go(nextValid)">Next Empty (Valid)</button>
       <button mat-button color="primary" [disabled]="nextNoneValid == null" (click)="go(nextNoneValid)">Next Empty (None Valid)</button>
+      <button mat-button color="primary" [disabled]="nextNonEmpty == null" (click)="go(nextNonEmpty)">Next Non-Empty</button>
     </mat-card-actions>
   </mat-card-content>
 </mat-card>

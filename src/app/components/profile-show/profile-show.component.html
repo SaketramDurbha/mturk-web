@@ -6,7 +6,7 @@
     <mat-card-content>
       <mat-table [dataSource]="observations" class="mat-elevation-z8" multiTemplateDataRows>
         <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedObservationColumns">
-          <mat-header-cell *matHeaderCellDef> {{column}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> {{column === 'id' ? 'year' : column}} </mat-header-cell>
           <mat-cell *matCellDef="let observation"> {{observation[column]}} </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedObservationColumns"></mat-header-row>

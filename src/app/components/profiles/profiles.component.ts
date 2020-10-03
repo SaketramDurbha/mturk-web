@@ -12,6 +12,9 @@ import { ProfileService } from '../../services/profile/profile.service';
   styleUrls: ['./profiles.component.scss']
 })
 export class ProfilesComponent implements OnInit {
+  nonefoundColor = 'red';
+  notNonefoundColor = 'green';
+
   profiles: MatTableDataSource<Profile> = new MatTableDataSource<Profile>();
   displayedColumns: string[] = ['id', 'num_gscholar', 'num_linkedin', 'num_researchgate', 'num_microsoft', 'num_website', 'num_cv', 'num_dissertation'];
 

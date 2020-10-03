@@ -40,8 +40,18 @@ export class ProfileService {
     return this.http.get<Profile[]>(this.paginateUrl, { params });
   }
 
-  getNextsNoneValids(id: string, type: string): Observable<Profile[]> {
+  getNextNoneValids(id: string, type: string): Observable<Profile[]> {
     const params = new HttpParams().set('after', id).set('type', type).set('col', 'nonevalid');
+    return this.http.get<Profile[]>(this.paginateUrl, { params });
+  }
+
+  getPrevNonEmptys(id: string, type: string): Observable<Profile[]> {
+    const params = new HttpParams().set('before', id).set('type', type).set('col', 'nonempty');
+    return this.http.get<Profile[]>(this.paginateUrl, { params });
+  }
+
+  getNextNonEmptys(id: string, type: string): Observable<Profile[]> {
+    const params = new HttpParams().set('after', id).set('type', type).set('col', 'nonempty');
     return this.http.get<Profile[]>(this.paginateUrl, { params });
   }
 

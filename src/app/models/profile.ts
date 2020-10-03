@@ -8,6 +8,14 @@ export interface Profile {
   num_cv: number;
   num_dissertation: number;
 
+  num_valid_gscholar: number;
+  num_valid_linkedin: number;
+  num_valid_researchgate: number;
+  num_valid_microsoft: number;
+  num_valid_website: number;
+  num_valid_cv: number;
+  num_valid_dissertation: number;
+
   nonefound_gscholar: boolean;
   nonefound_linkedin: boolean;
   nonefound_researchgate: boolean;

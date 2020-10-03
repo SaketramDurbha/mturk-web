@@ -10,43 +10,43 @@
     <!-- Num GScholar Column -->
     <ng-container matColumnDef="num_gscholar">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Number of GScholar URLs  </mat-header-cell>
-      <mat-cell *matCellDef="let profile"><a routerLink="/profiles/{{profile.id}}"> {{profile.num_gscholar}} </a></mat-cell>
+      <mat-cell *matCellDef="let profile"><a routerLink="/profiles/{{profile.id}}"> {{profile.num_valid_gscholar}} </a></mat-cell>
     </ng-container>
 
     <!-- Num LinkedIn Column -->
     <ng-container matColumnDef="num_linkedin">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Number of LinkedIn URLs  </mat-header-cell>
-      <mat-cell *matCellDef="let profile"><a routerLink="/profiles/{{profile.id}}"> {{profile.num_linkedin}} </a></mat-cell>
+      <mat-cell *matCellDef="let profile"><a routerLink="/profiles/{{profile.id}}"> {{profile.num_valid_linkedin}} </a></mat-cell>
     </ng-container>
 
     <!-- Num ResearchGate Column -->
     <ng-container matColumnDef="num_researchgate">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Number of ResearchGate URLs  </mat-header-cell>
-      <mat-cell *matCellDef="let profile"><a routerLink="/profiles/{{profile.id}}"> {{profile.num_researchgate}} </a></mat-cell>
+      <mat-cell *matCellDef="let profile"><a routerLink="/profiles/{{profile.id}}"> {{profile.num_valid_researchgate}} </a></mat-cell>
     </ng-container>
 
     <!-- Num Microsoft Column -->
     <ng-container matColumnDef="num_microsoft">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Number of Microsoft URLs  </mat-header-cell>
-      <mat-cell *matCellDef="let profile"><a routerLink="/profiles/{{profile.id}}"> {{profile.num_microsoft}} </a></mat-cell>
+      <mat-cell *matCellDef="let profile"><a routerLink="/profiles/{{profile.id}}"> {{profile.num_valid_microsoft}} </a></mat-cell>
     </ng-container>
 
     <!-- Num Website Column -->
     <ng-container matColumnDef="num_website">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Number of Website URLs  </mat-header-cell>
-      <mat-cell *matCellDef="let profile"><a routerLink="/profiles/{{profile.id}}"> {{profile.num_website}} </a></mat-cell>
+      <mat-cell *matCellDef="let profile"><a routerLink="/profiles/{{profile.id}}"> {{profile.num_valid_website}} </a></mat-cell>
     </ng-container>
 
     <!-- Num CV Column -->
     <ng-container matColumnDef="num_cv">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Number of CV URLs  </mat-header-cell>
-      <mat-cell *matCellDef="let profile"><a routerLink="/profiles/{{profile.id}}"> {{profile.num_cv}} </a></mat-cell>
+      <mat-cell *matCellDef="let profile"><a routerLink="/profiles/{{profile.id}}"> {{profile.num_valid_cv}} </a></mat-cell>
     </ng-container>
 
     <!-- Num Dissertation Column -->
     <ng-container matColumnDef="num_dissertation">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Number of Dissertation URLs  </mat-header-cell>
-      <mat-cell *matCellDef="let profile"><a routerLink="/profiles/{{profile.id}}"> {{profile.num_dissertation}} </a></mat-cell>
+      <mat-cell *matCellDef="let profile"><a routerLink="/profiles/{{profile.id}}"> {{profile.num_valid_dissertation}} </a></mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

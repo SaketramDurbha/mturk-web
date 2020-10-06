@@ -12,7 +12,7 @@ import { ProfileService } from '../../services/profile/profile.service';
   styleUrls: ['./profiles.component.scss']
 })
 export class ProfilesComponent implements OnInit {
-  nonefoundColor = 'red';
+  nonefoundColor = 'yellow';
   notNonefoundColor = 'none';
 
   profiles: MatTableDataSource<Profile> = new MatTableDataSource<Profile>();

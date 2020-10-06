@@ -40,22 +40,6 @@
         </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="file">
-        <mat-header-cell *matHeaderCellDef> File </mat-header-cell>
-        <mat-cell *matCellDef="let url">
-
-          <div *ngIf="url.index !== -1 && url.file !== ''; then thenBlock else elseBlock"></div>
-
-          <ng-template #thenBlock><a [href]="url.file" target="_blank">{{url.file}}</a></ng-template>
-          <ng-template #elseBlock>
-            <div *ngIf="url.index === -1; then thenBlock else elseBlock"></div>
-
-            <ng-template #thenBlock></ng-template>
-            <ng-template #elseBlock>Not Uploaded</ng-template>
-          </ng-template>
-        </mat-cell>
-      </ng-container>
-
       <ng-container matColumnDef="author-id">
         <mat-header-cell *matHeaderCellDef> Author ID </mat-header-cell>
         <mat-cell *matCellDef="let url">
@@ -63,10 +47,19 @@
         </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="filename">
-        <mat-header-cell *matHeaderCellDef> File Name </mat-header-cell>
+      <ng-container matColumnDef="file">
+        <mat-header-cell *matHeaderCellDef> File </mat-header-cell>
         <mat-cell *matCellDef="let url">
-          {{getFileName(url)}}
+          <div *ngIf="url.index !== -1 && url.file !== ''; then thenBlock else elseBlock"></div>
+
+          <ng-template #thenBlock><a [href]="url.file" target="_blank">{{getFileName(url)}}</a></ng-template>
+          <ng-template #elseBlock>
+            <div *ngIf="url.index === -1; then thenBlock else elseBlock"></div>
+
+            <ng-template #thenBlock></ng-template>
+            <ng-template #elseBlock>{{getFileName(url)}}</ng-template>
+          </ng-template>
+
         </mat-cell>
       </ng-container>
 

@@ -44,13 +44,13 @@ export class UrlsComponent implements OnInit {
               private profileService: ProfileService) {}
 
   ngOnInit(): void {
-    this.tableDisplayCols = ['index', 'url', 'votes', 'valid', 'file'];
+    this.tableDisplayCols = ['index', 'url', 'votes', 'valid'];
 
     if (this.type === 'Microsoft') {
       this.tableDisplayCols.push('author-id');
     }
 
-    this.tableDisplayCols.push('filename');
+    this.tableDisplayCols.push('file');
     this.tableDisplayCols.push('uploaded');
 
     this.noneFound = (this.profile[`nonefound_${this.type.toLowerCase()}` as keyof Profile] as boolean);
@@ -192,10 +192,6 @@ export class UrlsComponent implements OnInit {
   getFileName(url: URL): string {
     if (url.index === -1) {
       return '';
-    }
-
-    if (url.file !== '') {
-      return '-';
     }
 
     return `${this.profile.id}_${this.type.toLowerCase()}_${url.index}`;

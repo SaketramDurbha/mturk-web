@@ -12,7 +12,8 @@ import { URL } from '../../models/url';
 })
 export class UrlService {
   private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    withCredentials: true,
   };
 
   constructor(private http: HttpClient) { }
@@ -38,30 +39,30 @@ export class UrlService {
   updateNoneFound(profileId: string, type: string, noneFound: boolean): Observable<boolean> {
     const url = `${environment.apiUrl}/profiles/${profileId}/urls/${type}/nonefound`;
 
-    return this.http.patch<boolean>(url, {noneFound});
+    return this.http.patch<boolean>(url, {noneFound}, {withCredentials: true});
   }
 
   updateValid(profileId: string, id: string, type: string, valid: boolean): Observable<URL> {
     const url = `${environment.apiUrl}/profiles/${profileId}/urls/${type}/${id}/valid`;
 
-    return this.http.patch<URL>(url, {valid});
+    return this.http.patch<URL>(url, {valid}, {withCredentials: true});
   }
 
   updateUpvotes(profileId: string, id: string, type: string, votes: number): Observable<URL> {
     const url = `${environment.apiUrl}/profiles/${profileId}/urls/${type}/${id}/upvotes`;
 
-    return this.http.patch<URL>(url, {votes});
+    return this.http.patch<URL>(url, {votes}, {withCredentials: true});
   }
 
   updateDownvotes(profileId: string, id: string, type: string, votes: number): Observable<URL> {
     const url = `${environment.apiUrl}/profiles/${profileId}/urls/${type}/${id}/downvotes`;
 
-    return this.http.patch<URL>(url, {votes});
+    return this.http.patch<URL>(url, {votes}, {withCredentials: true});
   }
 
   checkUploaded(profileId: string, id: string, type: string): Observable<URL> {
     const url = `${environment.apiUrl}/profiles/${profileId}/urls/${type}/${id}/checkuploaded`;
 
-    return this.http.get<URL>(url);
+    return this.http.get<URL>(url, {withCredentials: true});
   }
 }

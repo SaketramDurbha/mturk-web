@@ -15,6 +15,6 @@ export class ObservationService {
   constructor(private http: HttpClient) { }
 
   getObservations(profileId: string): Observable<Observation[]> {
-    return this.http.get<Observation[]>(`${environment.apiUrl}/profiles/${profileId}/observations`);
+    return this.http.get<Observation[]>(`${environment.apiUrl}/profiles/${profileId}/observations`, {withCredentials: true});
   }
 }

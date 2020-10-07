@@ -22,13 +22,15 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProfilesComponent,
     ProfileShowComponent,
-    UrlsComponent
+    UrlsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

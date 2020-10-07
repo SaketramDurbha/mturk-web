@@ -78,7 +78,8 @@
       <ng-container matColumnDef="uploaded">
         <mat-header-cell *matHeaderCellDef> Uploaded? </mat-header-cell>
         <mat-cell *matCellDef="let url">
-          <button mat-raised-button color="primary" (click)="checkUploaded(url)" *ngIf="url.file === '' && url.index !== -1">Uploaded</button>
+          <button mat-raised-button color="primary" (click)="checkUploaded(url)" *ngIf="url.file === '' && url.index !== -1">Check?</button>
+          <div *ngIf="url.file !== '' && url.index !== -1">Uploaded</div>
         </mat-cell>
       </ng-container>
 

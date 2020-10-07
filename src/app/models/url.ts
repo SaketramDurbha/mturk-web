@@ -6,4 +6,5 @@ export interface URL {
   up_votes: number;
   down_votes: number;
   file: string;
+  comments: string;
 }

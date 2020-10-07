@@ -6,6 +6,8 @@ import { ProfileService } from '../../services/profile/profile.service';
 
 import { Observation } from '../../models/observation';
 import { ObservationService } from '../../services/observation/observation.service';
+import {AuthService} from '../../services/auth/auth.service';
+import {User} from '../../models/user';
 
 @Component({
   selector: 'app-profile-show',
@@ -13,6 +15,8 @@ import { ObservationService } from '../../services/observation/observation.servi
   styleUrls: ['./profile-show.component.scss'],
 })
 export class ProfileShowComponent implements OnInit {
+  currentUser: User;
+
   id = this.route.snapshot.paramMap.get('id');
   profile: Profile;
 
@@ -22,12 +26,15 @@ export class ProfileShowComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private profilesService: ProfileService,
-    private observationService: ObservationService
+    private observationService: ObservationService,
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
     this.getProfile();
     this.getObservations();
+
+    this.authService.currentUser.subscribe(user => this.currentUser = user);
   }
 
   getProfile(): void {

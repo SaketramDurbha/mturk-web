@@ -19,7 +19,7 @@ export class UrlService {
   constructor(private http: HttpClient) { }
 
   getURLs(profileId: string, type: string): Observable<URL[]> {
-    return this.http.get<URL[]>(`${environment.apiUrl}/profiles/${profileId}/urls/${type}`);
+    return this.http.get<URL[]>(`${environment.apiUrl}/profiles/${profileId}/urls/${type}`, {withCredentials: true});
   }
 
   addURL(profileId: string, newURL: string, type: string): Observable<URL> {
@@ -30,7 +30,8 @@ export class UrlService {
       valid: true, // placeholder
       up_votes: 1,
       down_votes: 0,
-      file: '' // placeholder
+      file: '', // placeholder
+      comments: '', // placeholder
     };
 
     return this.http.post<URL>(`${environment.apiUrl}/profiles/${profileId}/urls/${type}`, data, this.httpOptions);
@@ -42,10 +43,23 @@ export class UrlService {
     return this.http.patch<boolean>(url, {noneFound}, {withCredentials: true});
   }
 
+  updateNoneFoundComments(profileId: string, type: string, comments: string): Observable<boolean> {
+    const url = `${environment.apiUrl}/profiles/${profileId}/urls/${type}/nonefound-comments`;
+    return this.http.patch<boolean>(url, {comments}, {withCredentials: true});
+  }
+
   updateValid(profileId: string, id: string, type: string, valid: boolean): Observable<URL> {
     const url = `${environment.apiUrl}/profiles/${profileId}/urls/${type}/${id}/valid`;
 
     return this.http.patch<URL>(url, {valid}, {withCredentials: true});
+  }
+
+  updateComments(profileId: string, id: string, type: string, comments: string): Observable<boolean> {
+    console.log(id);
+    console.log(type);
+
+    const url = `${environment.apiUrl}/profiles/${profileId}/urls/${type}/${id}/comments`;
+    return this.http.patch<boolean>(url, {comments}, {withCredentials: true});
   }
 
   updateUpvotes(profileId: string, id: string, type: string, votes: number): Observable<URL> {

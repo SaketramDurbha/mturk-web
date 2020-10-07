@@ -24,6 +24,14 @@ export interface Profile {
   nonefound_cv: boolean;
   nonefound_dissertation: boolean;
 
+  nonefound_gscholar_comments: string;
+  nonefound_linkedin_comments: string;
+  nonefound_researchgate_comments: string;
+  nonefound_microsoft_comments: string;
+  nonefound_website_comments: string;
+  nonefound_cv_comments: string;
+  nonefound_dissertation_comments: string;
+
   nonefound_gscholar_up: number;
   nonefound_linkedin_up: number;
   nonefound_researchgate_up: number;

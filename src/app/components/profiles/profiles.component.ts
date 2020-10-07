@@ -5,6 +5,8 @@ import { MatSort } from '@angular/material/sort';
 
 import { Profile } from '../../models/profile';
 import { ProfileService } from '../../services/profile/profile.service';
+import {AuthService} from '../../services/auth/auth.service';
+import {User} from '../../models/user';
 
 @Component({
   selector: 'app-profiles',
@@ -12,6 +14,8 @@ import { ProfileService } from '../../services/profile/profile.service';
   styleUrls: ['./profiles.component.scss']
 })
 export class ProfilesComponent implements OnInit {
+  currentUser: User;
+
   nonefoundColor = 'yellow';
   notNonefoundColor = 'none';
 
@@ -20,12 +24,13 @@ export class ProfilesComponent implements OnInit {
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private profileService: ProfileService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.profiles.sort = this.sort;
-
     this.getProfiles();
+
+    this.authService.currentUser.subscribe(user => this.currentUser = user);
   }
 
   getProfiles(): void {

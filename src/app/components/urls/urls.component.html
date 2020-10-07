@@ -40,6 +40,18 @@
         </mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="comments">
+        <mat-header-cell *matHeaderCellDef> Comments </mat-header-cell>
+        <mat-cell *matCellDef="let url">
+          <mat-form-field class="fill-width">
+            <textarea matInput (focus)="onCommentsFocus(url)" [(ngModel)]="url.comments"></textarea>
+            <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="updateComments(url)">
+              <mat-icon>check</mat-icon>
+            </button>
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="author-id">
         <mat-header-cell *matHeaderCellDef> Author ID </mat-header-cell>
         <mat-cell *matCellDef="let url">

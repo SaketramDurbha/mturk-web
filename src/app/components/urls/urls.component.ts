@@ -9,6 +9,8 @@ import { UrlService } from '../../services/url/url.service';
 
 import { Profile } from '../../models/profile';
 import { ProfileService } from '../../services/profile/profile.service';
+import {User} from '../../models/user';
+import {AuthService} from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-urls',
@@ -19,8 +21,10 @@ export class UrlsComponent implements OnInit {
   @Input() profile: Profile;
   @Input() type: string;
 
+  currentUser: User;
+
   urls: MatTableDataSource<URL> = new MatTableDataSource<URL>();
-  newURL: string;
+  newURL = '';
 
   prevValid: Profile;
   nextValid: Profile;
@@ -32,19 +36,24 @@ export class UrlsComponent implements OnInit {
   nextNonEmpty: Profile;
 
   noneFound: boolean;
+  noneFoundComments: string;
   noneFoundUp: number;
   noneFoundDown: number;
 
   tableDisplayCols: string[];
+  addedSet: Set<string>;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
               private location: Location,
               private urlService: UrlService,
-              private profileService: ProfileService) {}
+              private profileService: ProfileService,
+              private authService: AuthService) {
+    this.addedSet = new Set<string>();
+  }
 
   ngOnInit(): void {
-    this.tableDisplayCols = ['index', 'url', 'votes', 'valid'];
+    this.tableDisplayCols = ['index', 'url', 'votes', 'valid', 'comments'];
 
     if (this.type === 'Microsoft') {
       this.tableDisplayCols.push('author-id');
@@ -54,6 +63,7 @@ export class UrlsComponent implements OnInit {
     this.tableDisplayCols.push('uploaded');
 
     this.noneFound = (this.profile[`nonefound_${this.type.toLowerCase()}` as keyof Profile] as boolean);
+    this.noneFoundComments = (this.profile[`nonefound_${this.type.toLowerCase()}_comments` as keyof Profile] as string);
     this.noneFoundUp = (this.profile[`nonefound_${this.type.toLowerCase()}_up` as keyof Profile] as number) || 0;
     this.noneFoundDown = (this.profile[`nonefound_${this.type.toLowerCase()}_down` as keyof Profile] as number) || 0;
 
@@ -63,6 +73,8 @@ export class UrlsComponent implements OnInit {
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     };
+
+    this.authService.currentUser.subscribe(user => this.currentUser = user);
   }
 
   getURLs(): void {
@@ -74,9 +86,25 @@ export class UrlsComponent implements OnInit {
       up_votes: this.noneFoundUp,
       down_votes: this.noneFoundDown,
       file: '',
+      comments: this.noneFoundComments,
     };
 
     this.urlService.getURLs(this.profile.id, this.type.toLowerCase()).subscribe(urls => this.urls.data =  [first].concat(urls));
+  }
+
+  onCommentsFocus(url: URL): void {
+    if (this.addedSet.has(`${url.url}_${this.type}`)) {
+      return;
+    }
+
+    this.addedSet.add(`${url.url}_${this.type}`);
+
+    if (url.comments === '') {
+      url.comments = `[${this.currentUser.email}]: `;
+      return;
+    }
+
+    url.comments = url.comments + `\n[${this.currentUser.email}]: `;
   }
 
   getPaginates(): void {
@@ -122,6 +150,8 @@ export class UrlsComponent implements OnInit {
   }
 
   addURL(): void {
+    console.log(this.newURL);
+
     this.urlService.addURL(this.profile.id, this.newURL, this.type.toLowerCase()).subscribe(url => {
       this.urls.data.push(url);
       this.urls.data = this.urls.data;
@@ -142,6 +172,18 @@ export class UrlsComponent implements OnInit {
 
     this.urlService.updateNoneFound(this.profile.id, this.type.toLowerCase(), url.valid)
       .subscribe(noneFound => url.valid = noneFound);
+  }
+
+  updateComments(url: URL): void {
+    if (url.index !== -1) {
+      console.log(url);
+      console.log(this.type);
+
+      this.urlService.updateComments(this.profile.id, url.id, this.type.toLowerCase(), url.comments).subscribe();
+      return;
+    }
+
+    this.urlService.updateNoneFoundComments(this.profile.id, this.type.toLowerCase(), url.comments).subscribe();
   }
 
   upvote(url: URL): void {

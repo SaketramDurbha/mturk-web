@@ -18,6 +18,12 @@ export class AuthService {
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(null);
     this.currentUser = this.currentUserSubject.asObservable();
+
+    this.whoami();
+  }
+
+  public get currentUserValue(): User {
+    return this.currentUserSubject.value;
   }
 
   login(idtoken: string): Observable<User> {
@@ -30,5 +36,11 @@ export class AuthService {
       this.currentUserSubject.next(user);
       return user;
     }));
+  }
+
+  whoami(): void {
+    this.http.get<User>(`${environment.apiUrl}/auth/whoami`, {withCredentials: true}).subscribe(user => {
+      this.currentUserSubject.next(user);
+    });
   }
 }

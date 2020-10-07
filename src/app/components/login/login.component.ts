@@ -20,7 +20,6 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router, public authService: AuthService, private location: Location, private ngZone: NgZone) { }
 
   ngOnInit(): void {
-
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     };
